@@ -1,0 +1,600 @@
+*{
+    margin: 0%;
+    box-sizing: border-box;
+    overflow-x: clip;
+}
+
+body{
+
+    background-color:#2C394B;
+
+}
+
+.header_nav{
+    margin: 0%;
+    position: relative;
+    width: 100%;
+    height:88px ;
+    
+}
+
+#barra_nav{
+    position: fixed;
+    top: 0%;
+    background-color:#1E201E;
+    display: flex;
+    align-items: center;
+    width:100%;
+    height: 88px;
+    justify-content: space-between;
+    z-index: 60;
+
+    
+}
+
+#logo_name{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-direction: row;
+    margin:28px;
+}
+#logo_name img{
+    width: 36px;
+    height: 40px;
+}
+#logo_name p{
+    color: rgb(13, 95, 247);
+    font-size: larger;
+    font-weight: bolder;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#menu_nav{
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    justify-content: space-between;
+    gap: 20px;
+    list-style: none;
+    color: rgb(13, 95, 247);
+    font-size:large;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    margin: 28px
+}
+
+#menu_nav li:hover{
+    color :rgb(59, 128, 255)
+}
+
+.hidden{
+    display: none;
+}
+
+.presentacion_cont{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.presentacion-descripcion{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+
+}
+.presentacion-descripcion img{
+    width: 150px;
+    height: 166px;
+}
+
+.presentacion-descripcion h1{
+    font-family: inter;
+    color:  rgb(13, 95, 247);
+} 
+
+.presentacion-descripcion p{
+    width: 600px;
+    text-align: center;
+    color: rgb(128, 128, 128);
+    font-family: inter;
+    font-size: large;
+    font-weight: 300;
+    
+}
+
+.boton_start-cont{
+    display: flex;
+    width:100%;
+    margin: 60px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.boton_start-cont button{
+    width: 250px;
+    height: 32px;
+    background-color:rgb(13, 95, 247);
+    border: none;
+    border-radius: 4cap;
+    font-size: medium;
+    font-weight: 600;
+    color: aliceblue;
+    font-family: inter;
+}
+
+/* CREAR NOTAS  */
+
+.crear_nota_cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80vh;
+    position: fixed;
+    z-index: 200;
+}
+
+.crear_nota{
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    background:rgb(230, 228, 221);
+    width: 400px;
+    height: min-content;
+    border-radius: 8px;
+    padding: 12px;
+
+
+}
+.crear_nota_header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.crear_nota_header h1{
+    font-size: medium;
+    font-family: inter;
+    margin-left: 16px;
+
+}
+.crear_nota_header button{
+  font-size: small;
+  font-family: inter;
+  font-weight: 600;
+  color:whitesmoke;
+  padding:4px 8px 4px 8px;
+  border-radius: 5px;
+  border: 1px solid whitesmoke;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background:rgb(13, 95, 247);;
+  
+
+}
+.crear_nota_header button:hover{
+    background:rgb(12, 76, 194);
+}
+.crear_nota_header button img{
+    width: 18px;
+    height: 18px;
+}
+.crear_nota-fas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:12px;
+    
+    align-items: center;
+    margin: 16px;
+    height: 90%;
+
+}
+
+.crear_title{
+    width: 100%;
+    align-items: center;
+    border-bottom:1px solid rgba(0, 0, 0, 0.26) ;
+}
+.crear_title textarea{
+    margin: 0;
+    width: 362px;
+    border-style: none;
+    resize: none;
+    background:rgb(230, 228, 221);
+    outline: none;
+   
+    
+    
+}
+.crear_title textarea::-webkit-scrollbar{
+    width: 10px;
+
+}
+
+
+
+
+.crear_text{
+    width: 100%;
+    height: 130px;
+    border-bottom:1px solid  rgba(0, 0, 0, 0.26) ;;
+}
+.crear_text textarea{
+    width:362px;
+    height:90%;
+    border-bottom: 1px solid grey;
+    border-style: none;
+    resize: none;
+    background:rgb(230, 228, 221);
+    outline: none;
+
+    
+}
+
+.crear_text textarea::-webkit-scrollbar{
+    width: 10px;
+   
+}
+.crear_text::-webkit-scrollbar-track{
+    background:  #f0f0f0;;
+   border-radius: 10px;
+
+}
+.crear_text::-webkit-scrollbar-thumb{
+    background: #888;
+    width: 8px;
+    height: 16px;
+    border-radius: 8px;
+}
+
+
+
+.crear_nota_items{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 48px;
+    margin-bottom: 12px;
+    list-style: none;
+    text-align: center;
+
+}
+
+.crear_nota_items li {
+    display: flex;
+    align-items:center;
+    gap: 3px;
+    justify-content: center;
+    border: 1px solid #888;
+    border-radius: 3px;
+    padding: 4px;
+    font-family: inter;
+    font-size: small;
+    font-weight: 500;
+    color: #555;
+}
+.crear_nota_items li:hover{
+    background-color: #bbbaba;
+}
+.crear_nota_items li img{
+    width: 20px;
+    height: 20px;
+}
+
+/* MIS NOTAS  */
+.cuerpo_cont{
+    display: flex;
+    flex-direction: column;
+    width: 82vw;
+    position: absolute;
+    left:18vw;
+    height: 100%;
+
+}
+
+.title_section{
+    display: flex;
+    width:100%;
+    height: 94px;
+    background-color: #283546;
+    align-items: center;
+}
+
+.title_section  h1{
+        font-family: inter;
+        margin: 50px;
+}
+
+.mis_notas_cont {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+    background-color: #2C394B;
+    box-sizing: border-box;
+    row-gap: 28px;
+    grid-auto-rows: min-content;
+    padding: 2vw;
+    margin: 0%;
+    height: auto;
+}
+
+
+.note_box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: bisque;
+    width: 100%;
+    min-height: 150px;
+    max-height: 400px;
+    justify-self: center;
+    align-self: self-start;
+    border-radius: 12px;
+}
+
+
+.header_note_check{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.check_button{
+    width: 25px;
+    height: 25px;
+    background-color: red;
+    margin: 0px 20px;
+}
+
+
+.header_note{
+    display: flex;
+    align-content:center ;
+    justify-content: space-between;
+    width: 90%;
+    margin: 8px;
+}
+.fijar_note {
+    background-color: bisque;
+    border: none;
+   
+}
+
+.noteIcon{
+    width: 24px;
+    height: 24px;
+    border-radius: 24px;
+    background-color: bisque;
+    transition: background-color 0.3s ease;
+}
+.noteIcon:hover{
+    background-color: rgb(233, 192, 143);
+}
+
+
+
+.text_note {
+    display: flex
+;
+    justify-content: start;
+    align-items: center;
+    width: 90%;
+    text-align: center;
+    margin: 12px;
+    overflow-y: auto;
+}
+.text_note p {
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: -webkit-fill-available;
+    margin: 8px;
+}
+.text_note::-webkit-scrollbar {
+    width: 6px;
+}
+.text_note::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+.text_note::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+.footer_note{
+    margin-top: 0px;
+    margin-bottom: 22px;
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+.settings_btn{
+    background-color: bisque;
+    border: none;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+.settings_btn:hover{
+    background-color: rgb(233, 192, 143);
+}
+
+.settings_note_ul{
+    list-style: none;
+    font-family: inter;
+    font-size:14px;
+    font-weight: 550;
+    color:#2C394B;
+    display: flex;
+    text-align:left;
+    align-items:start;
+    flex-direction: column;
+    gap: 6px;
+    position: absolute;
+    bottom: -76px;
+    right: 44px;
+    width: auto;
+    padding: 8px;
+    margin: 0%;
+    z-index: 50;
+    background:  rgb(233, 192, 143);
+    border-radius: 6px;
+    box-shadow:2px 2px 5px #2C394B;
+    
+}
+.settings_note_ul li:hover{
+    color: #555;
+}
+
+.settingsIcon{
+    width: 28px;
+    height: 28px;
+
+}
+
+/* Contenedor principal del menú lateral */
+.aside_menu_cont {
+    position: fixed;
+    width: 18vw;
+    height: 100vh;
+    background-color: #2c3e50; /* Fondo oscuro elegante */
+    color: #ecf0f1; /* Texto claro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+}
+
+/* Título del menú lateral */
+.aside_title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ecf0f1 ; /* Un toque de color vibrante */
+}
+
+/* Lista principal del menú */
+.aside_menu_ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.aside_menu_ul img{
+    display: block;
+    margin: 10px;
+}
+
+/* Elementos de la lista */
+.aside_menu_ul li {
+    width: 100%;
+    display: flex;
+    margin: 10px 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* Estilo para los enlaces o párrafos dentro del menú */
+.aside_menu_ul li p {
+    font-size: 18px;
+    font-weight: 350;
+    padding: 10px 20px;
+    text-align: left;
+
+    font-family: roboto;
+
+}
+
+/* Efecto hover para los elementos del menú */
+.aside_menu_ul li:hover {
+    background-color: #34495e; /* Color más oscuro para el hover */
+    color: #f39c12; /* Combina con el título */
+}
+
+/* Opcional: Efecto para el elemento activo del menú */
+.aside_menu_ul li.active p {
+    background-color: #f39c12; /* Fondo del elemento activo */
+    color: #2c3e50; /* Texto oscuro para contraste */
+}
+
+/* Responsividad para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .aside_menu_cont {
+        width: 200px;
+    }
+
+    .aside_title {
+        font-size: 20px;
+    }
+
+    .aside_menu_ul li p {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mis_notas_cont {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 480px) {
+    .mis_notas_cont {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+footer{
+    display: none;
+}

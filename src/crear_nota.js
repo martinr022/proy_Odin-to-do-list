@@ -1,24 +1,31 @@
 import "./styles.css";
-import fijarImg from "./alfiler.png";
-import calendarioImg from "./calendario.png";
-import cromaticoImg from "./cromatico.png";
+import piorityImg from "./icons/pioridad.svg";
+import cronogramaImg from "./icons/cronograma.svg";
+import asignarImg from "./icons/añadir_proy.svg";
 import añadirBtn from "./anadir.png"
 import {renderNote_Box} from "./mis_notas"
-
-import {proyectoss} from "./index";
+import { proyecto_actual } from "./proyectos";
+import {guardarEstado, proyectoss} from "./index";
 import { format } from 'date-fns';
 const content= document.querySelector("#content");
-let crear_nota_cont;
+
 let contadorId=0;
+export let crear_nota_cont;
+
 
 export function renderCrear_nota(){
+   
+    const obtener_fecha=new Date();
+let fechaActual=format(obtener_fecha,"dd/MMM/yy")
 
      crear_nota_cont=document.createElement("section");
+   
     crear_nota_cont.classList.add("crear_nota_cont");
-    crear_nota_cont.classList.add("hidden");
+    
 
     const crear_nota=document.createElement("div");
     crear_nota.classList.add("crear_nota");
+    crear_nota.id="crear_notaId"
 
     const crear_nota_header =document.createElement("div");
     crear_nota_header.classList.add("crear_nota_header");
@@ -43,7 +50,7 @@ export function renderCrear_nota(){
     crear_title.classList.add("crear_title");
 
     let title_Txt=document.createElement("textarea");
-    title_Txt.placeholder="Escribe un titulo...";
+    title_Txt.placeholder="Escribe tarea...";
 
 
     const crear_text=document.createElement("div");
@@ -56,20 +63,20 @@ export function renderCrear_nota(){
     const crear_nota_items=document.createElement("ul");
     crear_nota_items.classList.add("crear_nota_items");
 
-    const li_cromatico=document.createElement("li");
-    li_cromatico.textContent="Estilos";
-    const cromatico_img=document.createElement("img");
-   cromatico_img.src=cromaticoImg;
+    const li_asignar=document.createElement("li");
+    li_asignar.textContent="Asignar a";
+    const asignar_img=document.createElement("img");
+   asignar_img.src=asignarImg;
 
-   const li_calendario=document.createElement("li");
-   li_calendario.textContent="Fecha";
-   const calendario_img=document.createElement("img");
-   calendario_img.src=calendarioImg;
+   const li_cronograma=document.createElement("li");
+   li_cronograma.textContent="Fecha";
+   const cronograma_img=document.createElement("img");
+   cronograma_img.src=cronogramaImg;
 
-    const li_alfiler=document.createElement("li");
-    li_alfiler.textContent="Pioridad";
-    const alfiler_img=document.createElement("img");
-    alfiler_img.src=fijarImg;
+    const li_pioridad=document.createElement("li");
+    li_pioridad.textContent="Pioridad";
+    const piority_img=document.createElement("img");
+    piority_img.src=piorityImg;
 
     crear_nota.appendChild(crear_nota_header);
     crear_nota.appendChild(crear_nota_fas);
@@ -87,15 +94,15 @@ export function renderCrear_nota(){
 
     crear_text.appendChild(text_Txt);
 
-    crear_nota_items.appendChild(li_cromatico);
-    crear_nota_items.appendChild(li_calendario);
-    crear_nota_items.appendChild(li_alfiler);
+    crear_nota_items.appendChild(li_asignar);
+    crear_nota_items.appendChild(li_cronograma);
+    crear_nota_items.appendChild(li_pioridad);
 
-    li_cromatico.appendChild(cromatico_img)
+    li_cronograma.appendChild(cronograma_img)
 
-    li_calendario.appendChild(calendario_img);
+    li_asignar.appendChild(asignar_img);
 
-    li_alfiler.appendChild(alfiler_img);
+    li_pioridad.appendChild(piority_img);
 
     crear_nota_cont.appendChild(crear_nota);
 
@@ -104,9 +111,9 @@ export function renderCrear_nota(){
     
     button_header.addEventListener("click", () => {
         if (title_Txt.value.trim() !== "" && text_Txt.value.trim() !== "") {
-           proyectoss[0].agregarNota(title_Txt.value,text_Txt.value)
-            renderNote_Box();
-            
+           proyectoss[proyecto_actual].agregarNota(title_Txt.value,text_Txt.value,fechaActual)
+            renderNote_Box(proyecto_actual);
+            guardarEstado()
         }
         title_Txt.value="";
         text_Txt.value="";
@@ -131,9 +138,11 @@ const fechasss=new Date();
 console.log(format(fechasss,"dd/MMM/yy"));
 
 
+export function show_Crear_nota(){
+    crear_nota_cont.classList.add("mostrar")
+};
 
-export {crear_nota_cont};
 
 export function hidden_Crear_nota(){
-    crear_nota_cont.classList.toggle("crear_nota_cont")
+    crear_nota_cont.classList.remove("mostrar")
 };

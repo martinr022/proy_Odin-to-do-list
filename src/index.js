@@ -1,23 +1,31 @@
 import "./styles.css";
 import "./recordatorio.png";
 import { renderHome } from "./home";
-import {renderCrear_nota , hidden_Crear_nota , crear_nota_cont} from "./crear_nota"
-import { newNoteItem, renderNote_Box,renderMainContent, renderAside_note} from "./mis_notas"
+import {renderCrear_nota , show_Crear_nota,hidden_Crear_nota} from "./crear_nota"
+import { newNoteItem, renderNote_Box,renderMainContent} from "./mis_notas"
+import { renderAside_note } from "./UI/renderAside";
+import { proyecto_actual ,renderProyectItem} from "./proyectos";
+
+import { close_Other_Menus } from "./helpers/doom_Helpers";
+
 
 const blogBtn=document.querySelector(".blog_li");
+blogBtn.addEventListener("click",hidden_Crear_nota);
 const acercabtm=document.querySelector(".acerca_li");
 export let proyectoss=[];
 
+
 window.addEventListener("DOMContentLoaded",()=> {
+    
+    obtener_storage()
     renderMainContent();
     renderAside_note();
-    renderNote_Box()
- //addeventslisteners
- 
-newNoteItem.addEventListener("click",renderCrear_nota)
-blogBtn.addEventListener("click",hidden_Crear_nota);
-
-
+    renderCrear_nota();
+    renderProyectItem(proyectoss);
+    renderNote_Box(proyecto_actual);
+    console.log(proyecto_actual)
+    console.log(proyectoss)
+  
 })
 console.log("hola");
 // index.js
@@ -35,43 +43,74 @@ console.log("hola");
     }
 };*/
 
-class Proyecto {
-    constructor() {
-        this.nota_list_=[],
-        this.contadorId=0
+export class Proyecto {
+    constructor(nombre,id=generarIdUnico()) {
+        this.id = id; // Generar un ID único
+        this.nombre=nombre;
+        this.nota_list_=[];
+        this.contadorId=0;
     }
-        agregarNota= function(title, texts) {
-            this.nota_list_.push({
-                id: this.contadorId++,
+        agregarNota= function(title, texts,fecha) {
+            this.nota_list_.push({ 
+                id:this.contadorId++,
                 title,
-                texts
-            })
+                texts,
+                fecha
+            }
+            )
+           
             guardarEstado()
         }
 }
 
-function crearClase(nProyect){
-
-    nProyect=new Proyecto();
-    proyectoss.push(nProyect)
-
+export function crearProyecto(nombreProyecto,id) {
+    const nuevoProyecto = new Proyecto(nombreProyecto,id);
+    proyectoss.push(nuevoProyecto);
+guardarEstado()
 }
 
-crearClase("estado")
 
 
 
+// Función para generar un ID único
+
+export function generarIdUnico() {
+    const timestamp = Date.now(); // Timestamp actual
+    const random = Math.floor(Math.random() * 10000); // Número aleatorio
+    return `proyecto_${timestamp}_${random}`; // Combinar ambos
+}
 
 
-    proyectoss[0].nota_list_ = JSON.parse(localStorage.getItem('notas')) || [];
-    proyectoss[0].contadorId = JSON.parse(localStorage.getItem('contadorId')) || 0;
-  
 
-// Función para guardar TODO el estado
+console.log(proyectoss[0])
+console.log(Date.now())
+
+// Cargar proyectos desde localStorage
+export function obtener_storage() {
+    const datos_=localStorage.getItem("proyectos");
+    if (datos_){
+        const proyectos_guardados= JSON.parse(datos_);
+        proyectoss.length = 0; // Limpiar array actual
+        for (const p of proyectos_guardados) {
+            const nuevoProyecto = new Proyecto(p.nombre, p.id);
+            nuevoProyecto.nota_list_ = p.nota_list_ || [];
+            nuevoProyecto.contadorId = p.contadorId || 0;
+            proyectoss.push(nuevoProyecto);
+        }
+    }
+    }
+
+// Guardar el estado de todos los proyectos en localStorage
 export function guardarEstado() {
-    localStorage.setItem('notas', JSON.stringify(proyectoss[0].nota_list_));
-    localStorage.setItem('contadorId', JSON.stringify(proyectoss[0].contadorId));
-    
-}
 
+    localStorage.setItem("proyectos", JSON.stringify(proyectoss))
+
+};
+    
+close_Other_Menus("#nuevaNotaIdBtn",".crear_nota_cont","mostrar")
+
+close_Other_Menus("#proyIdBtn",".subUl","show")
+
+
+   
 

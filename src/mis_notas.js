@@ -1,28 +1,28 @@
 import "./styles.css";
 const content= document.querySelector("#content");
 import alfilerImg from "./alfiler.png";
-import add_notes_ from "./add_notes.svg";
-import proyects_ from "./folder_open.svg"
-import inbox_ from "./inbox.svg";
-import calendar_ from "./events_.svg";
-import settings_noteImg from "./verMas.svg"
+import add_notes_ from "./icons/add_notes.svg"
+import proyects_ from "./icons/folder_open.svg"
+import inbox_ from "./icons/inbox.svg";
+import new_proy from "./icons/new_proy.svg";
+import {renderProyectItem, subMenuProyUl, seleccioar_Proyecto,proyecto_actual} from "./proyectos.js";
+import {crear_nota_cont,show_Crear_nota} from "./crear_nota.js"
+import {render_crearProy_card} from "./UI/crear_proy.js";
+import calendar_ from "./icons/events_.svg";
+import settings_noteImg from "./icons/verMas.svg"
 import { format } from 'date-fns';
 import {guardarEstado} from "./index";
-import {proyectoss} from "./index";
+import {proyectoss, Proyecto} from "./index";
 
+import { togglear_elementos } from "./helpers/doom_Helpers.js";
 
-const obtener_fecha=new Date();
-let fechaActual=format(obtener_fecha,"dd/MMM/yy")
 
 
 export let newNoteItem;
 
- let mis_notas_cont;
+
  let contenedor;
-
-
- 
-
+ let mis_notas_cont
 
 export function renderMainContent(){
    
@@ -34,99 +34,54 @@ export function renderMainContent(){
 
     const title_section_H1=document.createElement("h1");
     title_section_H1.textContent="Mis notas";
-     mis_notas_cont=document.createElement("section");
+      mis_notas_cont=document.createElement("section");
     mis_notas_cont.classList.add("mis_notas_cont")
-
     contenedor.appendChild(title_section)
+    contenedor.appendChild(mis_notas_cont)
+    
     title_section.appendChild(title_section_H1);
+
+    content.appendChild(contenedor);
+
+    return{mis_notas_cont}
  
 }
 
 
-export function renderNote_Box() {
-    let obj;
-    mis_notas_cont.innerHTML="";
-    for (obj of proyectoss[0].nota_list_) {
+
+export function renderNote_Box(proyecto_actual) {
+ 
+  if (!mis_notas_cont) throw new Error("Ejecuta renderMainContent() primero");
+  const fragmento_nota=document.createDocumentFragment();
+  
+    for (let obj of proyectoss[proyecto_actual].nota_list_) {
+
     // Contenedor principal
+
 const noteBox = document.createElement('div');
 noteBox.classList.add('note_box');
 
 // Header de la nota
-const header_note_check= document.createElement('div');
-header_note_check.classList.add('header_note_check');
+const { header_note_check, check_button, headerNote, titleNote, fijarNote, noteIconFijar } = renderNote_header(obj.title);
 
-const check_button=document.createElement("button");
-check_button.classList.add("check_button");
-
-    const headerNote = document.createElement('div');
-    headerNote.classList.add('header_note');
-    
-    // Título
-    const titleNote= document.createElement('h1');
-    titleNote.classList.add('title_note');
-    titleNote.textContent = obj.title;
-    
-    // Botón fijar
-    const fijarNote = document.createElement('button');
-    fijarNote.classList.add('fijar_note');
-    
-    const noteIconFijar = document.createElement('img');
-    noteIconFijar.classList.add('noteIcon');
-    noteIconFijar.src = alfilerImg;
-    noteIconFijar.alt = 'fijar';
+    // Cuerpo de la nota
+    const {textNote, textNoteP}=renderNote_body(obj.texts)
 
     //footer note
-    const footerNote=document.createElement("div");
-    footerNote.classList.add("footer_note");
-    const settings_btn=document.createElement("button");
-    settings_btn.classList.add("settings_btn");
-    
-    const settings_btn_img=document.createElement("img");
-  
-    settings_btn_img.src=settings_noteImg;
- 
-    const fechaDate=document.createElement("div")
-    fechaDate.classList.add("fecha_note");
-    const dateTxT=document.createElement("p")
-    dateTxT.textContent=fechaActual;
-    
+     const{footerNote, settings_btn, settings_btn_img, fechaDate ,dateTxT}= renderNote_footer(obj.fecha)
 
     // settings note ul
-  
- const settingsNoteUl= document.createElement("ul");
-   
-    settingsNoteUl.classList.add("hidden");
-    
+  const {settingsNoteUl, edit, recordatorio, estilos, eliminar}= renderNote_settings()
 
-    settings_btn.addEventListener("click", () => {
-        settingsNoteUl.classList.toggle("settings_note_ul"); // Cambia solo para este elemento
-      })
-
- 
-    
-
-
-    const edit=document.createElement("li");
-    edit.textContent="Editar"
-    const recordatorio=document.createElement("li");
-    recordatorio.textContent="Recordatorio"
-    const estilos=document.createElement("li");
-    estilos.textContent="Estilos"
-    const eliminar=document.createElement("li");
-    eliminar.textContent="Eliminar"
-    
-    // Cuerpo de la nota
-    const textNote = document.createElement('div');
-    textNote.classList.add('text_note');
-    
-    const textNoteP = document.createElement('p');
-    textNoteP.innerText=obj.texts;
-    
    //ADD EVENTS LISTENERS
+
+   settings_btn.addEventListener("click", () => {
+    settingsNoteUl.classList.toggle("settings_note_ul"); // Cambia solo para este elemento
+  })
 
    eliminar.addEventListener("click",() => {
     deleteNote_(obj.id);
-    renderNote_Box()
+    renderNote_Box(proyecto_actual)
 })
 
     //elementos del contenedor principal note_box
@@ -159,80 +114,115 @@ check_button.classList.add("check_button");
   settingsNoteUl.appendChild(eliminar);
   console.log(settingsNoteUl); 
  
-  mis_notas_cont.appendChild(noteBox);
-  contenedor.appendChild(mis_notas_cont)
-  content.appendChild(contenedor);
+  fragmento_nota.appendChild(noteBox);
+  
+  
     }
+    mis_notas_cont.innerHTML="";
+    mis_notas_cont.appendChild(fragmento_nota)
+}
+ 
+function renderNote_header(title){
+  const header_note_check= document.createElement('div');
+header_note_check.classList.add('header_note_check');
+
+const check_button=document.createElement("button");
+check_button.classList.add("check_button");
+
+    const headerNote = document.createElement('div');
+    headerNote.classList.add('header_note');
+    
+    // Título
+    const titleNote= document.createElement('h1');
+    titleNote.classList.add('title_note');
+    titleNote.textContent = title;
+    
+    // Botón fijar
+    const fijarNote = document.createElement('button');
+    fijarNote.classList.add('fijar_note');
+    
+    const noteIconFijar = document.createElement('img');
+    noteIconFijar.classList.add('noteIcon');
+    noteIconFijar.src = alfilerImg;
+    noteIconFijar.alt = 'fijar';
+      // Devuelve un objeto con los elementos necesarios
+  return {
+    header_note_check,
+    check_button,
+    headerNote,
+    titleNote,
+    fijarNote,
+    noteIconFijar,
+  };
+}
+
+function renderNote_body(texts){
+  const textNote = document.createElement('div');
+  textNote.classList.add('text_note');
+  
+  const textNoteP = document.createElement('p');
+  textNoteP.innerText=texts;
+
+  return {textNote, textNoteP}
+  
+}
+  
+function renderNote_footer(fechaActual){
+  const footerNote=document.createElement("div");
+  footerNote.classList.add("footer_note");
+  const settings_btn=document.createElement("button");
+  settings_btn.classList.add("settings_btn");
+  
+  const settings_btn_img=document.createElement("img");
+
+  settings_btn_img.src=settings_noteImg;
+
+  const fechaDate=document.createElement("div")
+  fechaDate.classList.add("fecha_note");
+  const dateTxT=document.createElement("p")
+  dateTxT.textContent=fechaActual;
+  
+  return {
+    footerNote, settings_btn, settings_btn_img, fechaDate ,dateTxT
+  }
 
 }
 
+function renderNote_settings(){
+  const settingsNoteUl= document.createElement("ul");
 
-// RENDER ASIDE MENU
-export function renderAside_note(){
-    // Contenedor principal del menú lateral
-const asideMenuCont = document.createElement('aside');
-asideMenuCont.classList.add('aside_menu_cont');
+    settingsNoteUl.classList.add("hidden");
+    
+    const edit=document.createElement("li");
+    edit.textContent="Editar"
+    const recordatorio=document.createElement("li");
+    recordatorio.textContent="Recordatorio"
+    const estilos=document.createElement("li");
+    estilos.textContent="Estilos"
+    const eliminar=document.createElement("li");
+    eliminar.textContent="Eliminar"
+   
 
-// Título del menú lateral
-const asideTitle = document.createElement('h2');
-asideTitle.classList.add('aside_title');
-asideTitle.textContent = 'Martin';
-
-// Lista principal del menú
-const asideMenuUl = document.createElement('ul');
-asideMenuUl.classList.add('aside_menu_ul');
-
-
-// Función para crear cada elemento de la lista
-function createMenuItem(iconSrc, textContent,claseLi) {
-    const listItem = document.createElement('li'); // Elemento de la lista
-    listItem.classList.add(claseLi);
-
-    const imgIcon = document.createElement('img'); // Imagen del ícono
-    imgIcon.src = iconSrc;
-    imgIcon.alt = textContent;
-
-    const menuText = document.createElement('p'); // Texto del ítem
-    menuText.textContent = textContent;
-
-    // Añadir la imagen y el texto al elemento de la lista
-    listItem.appendChild(imgIcon);
-    listItem.appendChild(menuText);
-
-    return listItem;
+    return{
+      settingsNoteUl, edit, recordatorio, estilos, eliminar
+    }
+    
 }
 
 
 
-// Crear los elementos del menú
-  newNoteItem = createMenuItem(add_notes_, 'Nueva nota',"newNote_Li");
-const projectsItem = createMenuItem(proyects_, 'Mis proyectos',"projects_Li");
-const calendarItem = createMenuItem(calendar_, 'Calendario',"calendar_Li");
-const inboxItem = createMenuItem(inbox_, 'Inbox',"inbox_Li");
 
-// Añadir los elementos al contenedor de la lista
-asideMenuUl.appendChild(newNoteItem);
-asideMenuUl.appendChild(projectsItem);
-asideMenuUl.appendChild(calendarItem);
-asideMenuUl.appendChild(inboxItem);
-
-// Añadir el título y la lista al contenedor principal
-asideMenuCont.appendChild(asideTitle);
-asideMenuCont.appendChild(asideMenuUl);
-
-// Finalmente, añadir el aside al documento (por ejemplo, al body)
-document.body.appendChild(asideMenuCont);
-
-}
+// Cerrar el dropdown si se hace clic fuera de él
 
 // BORRAR NOTA
 export function deleteNote_(id) {
-    const index = proyectoss[0].nota_list_.findIndex(item => item.id === id);
+    const index = proyectoss[proyecto_actual].nota_list_.findIndex(item => item.id === id);
     if (index !== -1) {
-        proyectoss[0].nota_list_.splice(index, 1);
+        proyectoss[proyecto_actual].nota_list_.splice(index, 1);
     }
-proyectoss[0].contadorId--;
+proyectoss[proyecto_actual].contadorId--;
     guardarEstado()
+    renderNote_Box(proyecto_actual)
 }
 
 /* 

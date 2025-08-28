@@ -18,6 +18,8 @@ export function renderCrear_nota(){
     const obtener_fecha=new Date();
 let fechaActual=format(obtener_fecha,"dd/MMM/yy")
 
+ 
+
      crear_nota_cont=document.createElement("section");
    
     crear_nota_cont.classList.add("crear_nota_cont");
@@ -69,9 +71,15 @@ let fechaActual=format(obtener_fecha,"dd/MMM/yy")
    asignar_img.src=asignarImg;
 
    const li_cronograma=document.createElement("li");
-   li_cronograma.textContent="Fecha";
+    const fechaInput= document.createElement("input");
+      fechaInput.type="date";
+      fechaInput.classList.add("fechaValue")
+   /*li_cronograma.textContent="Fecha";
    const cronograma_img=document.createElement("img");
    cronograma_img.src=cronogramaImg;
+   li_cronograma.addEventListener("click",()=>{ 
+      
+   })*/
 
     const li_pioridad=document.createElement("li");
     li_pioridad.textContent="Pioridad";
@@ -98,7 +106,7 @@ let fechaActual=format(obtener_fecha,"dd/MMM/yy")
     crear_nota_items.appendChild(li_cronograma);
     crear_nota_items.appendChild(li_pioridad);
 
-    li_cronograma.appendChild(cronograma_img)
+    li_cronograma.appendChild(fechaInput)
 
     li_asignar.appendChild(asignar_img);
 
@@ -111,7 +119,7 @@ let fechaActual=format(obtener_fecha,"dd/MMM/yy")
     
     button_header.addEventListener("click", () => {
         if (title_Txt.value.trim() !== "" && text_Txt.value.trim() !== "") {
-           proyectoss[proyecto_actual].agregarNota(title_Txt.value,text_Txt.value,fechaActual)
+           proyectoss[proyecto_actual].agregarNota(title_Txt.value,text_Txt.value,format(new Date(fechaInput.value), 'dd/MM/yyyy'),new Date(fechaInput.value).getTime())
             renderNote_Box(proyecto_actual);
             guardarEstado()
         }
@@ -121,7 +129,9 @@ let fechaActual=format(obtener_fecha,"dd/MMM/yy")
     });
 };
 
+function desplegarFechaInput(){
 
+}
 
 
 

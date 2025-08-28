@@ -161,7 +161,7 @@ body{
     display:flex;
     flex-direction: column;
     background:rgb(230, 228, 221);
-    width: 400px;
+    width: fit-content;
     height: min-content;
     border-radius: 8px;
     padding: 12px;
@@ -278,7 +278,7 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: left;
-    gap: 48px;
+    gap: 38px;
     margin-bottom: 12px;
     list-style: none;
     text-align: center;
@@ -306,6 +306,10 @@ body{
 .crear_nota_items li img{
     width: 20px;
     height: 20px;
+}
+
+.fechaValue{
+    width: 70px;
 }
 
 /* CREAR PROYECTOS*/

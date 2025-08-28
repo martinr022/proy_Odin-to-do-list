@@ -68,7 +68,7 @@ const { header_note_check, check_button, headerNote, titleNote, fijarNote, noteI
     const {textNote, textNoteP}=renderNote_body(obj.texts)
 
     //footer note
-     const{footerNote, settings_btn, settings_btn_img, fechaDate ,dateTxT}= renderNote_footer(obj.fecha)
+     const{footerNote, settings_btn, settings_btn_img, fechaDate ,dateTxT}= renderNote_footer(obj.fecha_limite)
 
     // settings note ul
   const {settingsNoteUl, edit, recordatorio, estilos, eliminar}= renderNote_settings()
@@ -167,7 +167,7 @@ function renderNote_body(texts){
   
 }
   
-function renderNote_footer(fechaActual){
+function renderNote_footer(fecha_limite){
   const footerNote=document.createElement("div");
   footerNote.classList.add("footer_note");
   const settings_btn=document.createElement("button");
@@ -180,7 +180,7 @@ function renderNote_footer(fechaActual){
   const fechaDate=document.createElement("div")
   fechaDate.classList.add("fecha_note");
   const dateTxT=document.createElement("p")
-  dateTxT.textContent=fechaActual;
+  dateTxT.textContent=fecha_limite;
   
   return {
     footerNote, settings_btn, settings_btn_img, fechaDate ,dateTxT

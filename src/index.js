@@ -8,6 +8,8 @@ import { proyecto_actual ,renderProyectItem} from "./proyectos";
 
 import { close_Other_Menus } from "./helpers/doom_Helpers";
 
+import { recopilarNotas,compararFechaLimite} from "./UI/principal_proy";
+
 
 const blogBtn=document.querySelector(".blog_li");
 blogBtn.addEventListener("click",hidden_Crear_nota);
@@ -25,6 +27,13 @@ window.addEventListener("DOMContentLoaded",()=> {
     renderNote_Box(proyecto_actual);
     console.log(proyecto_actual)
     console.log(proyectoss)
+const allNotasInbox = recopilarNotas(proyectoss);
+console.log(allNotasInbox)
+
+
+compararFechaLimite(allNotasInbox)
+proyectoss.push(allNotasInbox)
+
   
 })
 console.log("hola");
@@ -50,12 +59,13 @@ export class Proyecto {
         this.nota_list_=[];
         this.contadorId=0;
     }
-        agregarNota= function(title, texts,fecha) {
+        agregarNota= function(title, texts,fecha_limite, fecha_MilSeg) {
             this.nota_list_.push({ 
                 id:this.contadorId++,
                 title,
                 texts,
-                fecha
+                fecha_limite,
+                fecha_MilSeg
             }
             )
            
@@ -69,7 +79,7 @@ export function crearProyecto(nombreProyecto,id) {
 guardarEstado()
 }
 
-
+ // CREAMO UN PROYECTO BASE (predeterminado)
 
 
 // Función para generar un ID único
